@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>DBMS, Data and Data Flow Presentation</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+		<!--Internal CSS-->
+		<style>
+			/**
+			* Dope theme for reveal.js.
+			*
+			* By Chris Fulton, https://reacttees.com
+			*/
+			@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+			section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+			color: #222; }
+			
+			
+			@import url('https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap');
+
+			/*********************************************
+			* GLOBAL STYLES
+			*********************************************/
+			
+			.reveal .slide-background.present {
+					background-image: url(images/intro/sidebanner.png);
+					background-position: left top;
+					background-color: #fff;
+			}
+			
+			
+			body {
+			background: #222;
+			background-color: #222; }
+
+			.reveal {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 42px;
+			font-weight: normal;
+			color: black; }
+
+			::selection {
+			color: #fff;
+			background: #bee4fd;
+			text-shadow: none; }
+
+			::-moz-selection {
+			color: #fff;
+			background: #bee4fd;
+			text-shadow: none; }
+
+			.reveal .slides > section,
+			.reveal .slides > section > section {
+			line-height: 1.3;
+			font-weight: inherit; }
+
+			/*********************************************
+			* HEADERS
+			*********************************************/
+			.reveal h1,
+			.reveal h2,
+			.reveal h3,
+			.reveal h4,
+			.reveal h5,
+			.reveal h6 {
+			margin: 0 0 20px 0;
+			color: black;
+			font-family: 'Raleway', sans-serif;
+			font-weight: 600;
+			line-height: 1.2;
+			letter-spacing: normal;
+			
+			text-shadow: none;
+			word-wrap: break-word; }
+
+			.reveal h1 {
+			font-size: 2em; }
+
+			.reveal h2 {
+			font-size: 1.3em; }
+
+			.reveal h3 {
+			font-size: 1.1em; }
+
+			.reveal h4 {
+			font-size: 1em; }
+
+			.reveal h1 {
+			text-shadow: none; }
+
+			/*********************************************
+			* OTHER
+			*********************************************/
+			.reveal p {
+			margin: 20px 0;
+			line-height: 1.3; }
+
+			/* Ensure certain elements are never larger than the slide itself */
+			.reveal img,
+			.reveal video,
+			.reveal iframe {
+			max-width: 95%;
+			max-height: 95%; }
+
+			.reveal strong,
+			.reveal b {
+			font-weight: bold; }
+
+			.reveal em {
+			font-style: italic; }
+
+			.reveal ol,
+			.reveal dl,
+			.reveal ul {
+			display: inline-block;
+			text-align: left;
+			margin: 0 0 0 1em; }
+
+			.reveal ol {
+			list-style-type: decimal; }
+
+			.reveal ul {
+			list-style-type: disc; }
+			
+			.reveal ul li {
+				padding: .2em;
+				font-size: 1em;
+			}
+
+			
+			
+			
+			.box{
+				
+				flex:  1 0 300px;
+				
+				width: 200px;
+				height: 200px;
+				float:  left;
+				
+				margin: 10px;
+				font-size: 24px;
+				
+				
+				}
+			.box_two{
+				flex:  1 0 400px;
+				width: 400px;
+				float:  left;
+
+				margin: 20px;
+				font-size: 24px;
+			}
+
+			#flexcontain{
+				margin:auto;
+				display:  flex;
+				flex-wrap:wrap;
+				justify-content: space-between;
+				align-content: space-around;
+				
+			}
+
+			.green{
+				background-color: red;
+				color: white;
+				
+			}
+			.red{
+				background-color: green;
+				color: white;
+			}
+			.blue{
+				background-color: rgb(4, 149, 185);
+				color: white;
+			}
+			.yellow{
+				background-color: #f6aa01;
+				color: white;
+			}
+			.orange{
+				background-color: orangered;
+				color: white;
+			}
+			.aquamarine{
+				background-color: #00c080;
+				color: white;
+			}
+
+		</style>
+
+		<!-- Google Font -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,900" rel="stylesheet">
+
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background="#fff">
+
+					<h2>Data, Data Flow and DBMS</h2>
+					<img src="img/rawdata.png" alt="raw data picture">
+					<h3>Instructor: Chris Fulton</h3>
+				</section>
+
+				<section data-background="#eee">
+				    <h3>Learning Agenda</h3>
+				    <ul style="font-size: 22px;">
+						<li>Understanding the importance of data</li>
+						<ul>
+							<li>Why is data important?</li>
+							<li>Data as Information, Knowledge, Wisdom, Intelligence</li>
+							<li>Data Building Blocks</li>
+							<ul>
+								<li> Data Building Blocks Activity </li>
+							</ul>
+		
+						</ul>
+						<li>Data Flow Diagram (DFD)</li>
+						<ul>
+							<li>Elements of DFD - Terminology, Shapes and Tools (Activity)</li>
+							<li>Rules of Data Flow</li>
+							<li>DFD Levels/Layers - Examples</li>	
+						</ul>
+
+						<li>Database Management System (DBMS) </li>
+                       	<ul>
+                       		<li>What is a DBMS - Types of DBMS</li>
+							<li>Database Models - Hierarchial, Network, Relational, Object-Oriented</li>
+							<li>Advantages of DBMS, Structural Dependence and Structural Independence</li>
+							<li>Jobs and Occupational Outlook</li>
+	
+						</ul>
+
+				    </ul>
+				</section>
+
+				<section data-background="img/bg_one.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">What is Raw Data?</h1>
+				</section>
+				<section data-background="#fff">
+					<h3>Raw Data</h3>
+					<img src="img/data.jpg" alt="raw data"/>
+					
+					<div id="flexcontain">
+						<div class="box_two" style="font-size: 32px; margin: 10px;">
+							<h3>Data</h3>
+							<ul>	
+								<li style="font-size: 26px;"><b>Data</b> - Consist of raw facts</li>
+
+							</ul>
+						</div>
+						<div class="box_two" style="font-size: 32px; margin: 10px;">
+							<h3>Raw Data</h3>
+							<ul>	
+								<li style="font-size: 26px;"><b>Raw Data</b> - indicates that the facts have not yet been processes to reveal their meaning. </li>	
+							</ul>
+						</div>
+					</div>
+					
+					  <aside class="notes">
+					    
+					    
+					  </aside>
+				</section>
+				<section>
+				
+					<blockquote style="font-size: 62px;">"The purpose of collecting raw data is to extract meaning"</blockquote>
+				</section>
+				<section data-background="img/bg_one.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">Why Collect Data?</h1>
+				</section>
+				<section data-background="#fff">
+					<h3>Information</h3>
+					<img src="img/data_information.jpg" alt="data and information"/>
+					
+					<div id="flexcontain">
+						<div class="box_two" style="font-size: 32px; margin: 10px;">
+						
+							<ul>	
+								<li style="font-size: 26px;"><b>Information</b> -  Organizing data to reveal patterns or making forcast using statistical modeling. </li>	
+							</ul>
+						</div>
+					</div>
+					
+					  <aside class="notes">
+					    
+					    
+					  </aside>
+				</section>
+				<section data-background="img/bg_one.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">What is Raw Data?</h1>
+				</section>
+				<section>
+				
+					<blockquote style="font-size: 68px;">"To reveal meaning, information requires context"</blockquote>
+				</section>
+				<section data-background="img/bg_one.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">What does Information provide?</h1>
+				</section>
+				<section data-background="#fff">
+					<h3>Knowledge</h3>
+					<img src="img/data_info_know.jpg"  alt="data Information and Knowledge"/>
+					
+					<div id="flexcontain">
+						<div class="box_two" style="font-size: 32px; margin: 10px;">
+						
+							<ul>	
+								<li style="font-size: 26px;"><b>Knowledge</b> -   The body of information and facts about a specific subject. Knowledge implies familiarity, awareness, and understanding of information as it applies to an environment. </li>	
+							</ul>
+						</div>
+					</div>
+					
+					  <aside class="notes">
+					    
+					    
+					  </aside>
+				</section>
+				<section data-background="#fff">
+					<h3>Insight</h3>
+					<img src="img/insight_wisdom.png"  alt="insight wisdom Intelligence"/>
+					
+					<div id="flexcontain">
+						<div class="box_two" style="font-size: 32px; margin: 10px;">
+							<ul>	
+								<li style="font-size: 26px;"><b>Insight</b> -  Connecting dots for developing certain level of intelligence in the analyzed dataset </li>	
+							</ul>
+						</div>
+					</div>
+					
+					  <aside class="notes">
+					    
+					    
+					  </aside>
+				</section>
+				<section data-background="#fff">
+					<img src="img/datablocks.PNG"  alt="Data building Blocks"/>
+					<p style="font-size: 28px;">Understanding the differenct between data, information 
+						and knowledge helps drives database design.</p>
+					
+					  <aside class="notes">
+					    
+					    
+					  </aside>
+				</section>
+				<section data-background="#fff" style="top: 6.5px; display: block;" class="has-light-background present">
+					<h3>Data Blocks Activity</h3>
+					<p style="font-size: 24px;">MPLSRenters.com is a website that allows prospective apartment renters to create a profile and have 
+						high-end luxury apartments make offers to prospective renters. What is a data point we might want to collect on a prospective renter that would provide future insight on prospective renters.</p>
+					
+					<div id="flexcontain">
+						<div class="box red" style="font-size: 22px; margin: 10px; background-color: #eee; height: 280px; color: #111;"><p><b style="font-size: 28px;">Data</b> <br> </p></div>
+						<div class="box blue" style="font-size: 22px; margin: 10px; background-color: #eee; height: 280px; color: #111;"><p><b style="font-size: 28px;">Information</b> <br></p></div>
+						<div class="box green" style="font-size: 22px; margin: 10px; background-color: #eee; height: 280px; color: #111;"><p><b style="font-size: 28px;">Knowledge</b> <br></p></div>
+
+					</div>
+					
+				
+				</section>
+				<section data-background="img/books_bg.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">Data Flow Diagrams (DFD)</h1>
+				</section>
+				<section data-background="images/intro/sidebanner.png" data-background-size="contain" style="top: 0px; display: block; text-align: left;" data-background-image="images/intro/sidebanner.png" class="present">
+					<h3>Understanding DFD's</h3>
+					
+				     <p>Which of the options below is the best definition of a Data Flow Diagram?</p>
+				     
+				     <input type="radio" id="age1" style="transform: scale(2); " name="attendance" value="A">
+				     <label for="attendance1" style="font-size: 20px;">A) a type of flowchart that illustrates how “entities” such as people, objects or concepts relate to each other within a system.</label><br>
+				     <input type="radio" id="age2" style="transform: scale(2);" name="attendance" value="B">
+				     <label for="attendance2" style="font-size: 20px;">B)  the flow of information through the system and the activities that process this information.</label><br>  
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="C">
+				     <label for="attendance3" style="font-size: 20px;">C) a data model in which data is stored in the form of records and organized into a tree-like structure, or parent-child structure.</label><br>
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="D">
+				     <label for="attendance3" style="font-size: 20px;">D) All of the above options are true.</label><br><br>				  
+				</section>
+				<section data-background="images/intro/sidebanner.png" data-background-size="contain" style="top: 0px; display: block; text-align: left;" data-background-image="images/intro/sidebanner.png" class="present">
+					<h3>Understanding DFD's</h3>
+					
+				     <p>Which of the following items is not typically found in a DFD?</p>
+				     
+				     <input type="radio" id="age1" style="transform: scale(2); " name="attendance" value="A">
+				     <label for="attendance1" style="font-size: 20px;">A) Processes</label><br>
+				     <input type="radio" id="age2" style="transform: scale(2);" name="attendance" value="B">
+				     <label for="attendance2" style="font-size: 20px;">B) Data</label><br>  
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="C">
+				     <label for="attendance3" style="font-size: 20px;">C) Data-flows</label><br>
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="D">
+				     <label for="attendance3" style="font-size: 20px;">D) Data Stores</label><br>
+					 <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="E">
+				     <label for="attendance3" style="font-size: 20px;">E) External Entities</label><br><br>				  
+				</section>
+				<section data-background="images/intro/sidebanner.png" data-background-size="contain" style="top: 0px; display: block; text-align: left;" data-background-image="images/intro/sidebanner.png" class="present">
+					<h3>Understanding DFD's</h3>
+					
+				     <p>Typically, how many levels can you depict for a DFD?</p>
+				     
+				     <input type="radio" id="age1" style="transform: scale(2); " name="attendance" value="A">
+				     <label for="attendance1" style="font-size: 20px;">A) 1</label><br>
+				     <input type="radio" id="age2" style="transform: scale(2);" name="attendance" value="B">
+				     <label for="attendance2" style="font-size: 20px;">B) 2</label><br>  
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="C">
+				     <label for="attendance3" style="font-size: 20px;">C) 3</label><br>
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="D">
+				     <label for="attendance3" style="font-size: 20px;">D) 4</label><br>
+					 <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="E">
+				     <label for="attendance3" style="font-size: 20px;">E) 5</label><br><br>				  
+				</section>
+				<section data-background="" data-background-image="images/testing/unit_testing_bg.jpg" class="present" style="top: 80.5px; display: block;">
+					<h5 id="boxstyle">Data Flow Diagram Elements</h5>
+					<img src="img/dfd_diagram.PNG" width="700" alt="DFD Diagram example"/>
+					<div id="flexcontain" class="fragment visible current-fragment" data-fragment-index="0">
+						<div class="box blue" style=" flex: 1 0 200px; font-size: 18px; height: 220px; margin: 10px;  background-color: #d70901;"><p><b style="font-size: 22px; text-align: center;">Processes</b><br><br> the activities carried out by the system which use and transform information</p></div>
+						<div class="box aquamarine" style=" flex: 1 0 200px; font-size: 18px; height: 220px; margin: 10px; background-color: #46ACC2;"><p><b style="font-size: 22px; text-align: center;"> Data-flows</b><br><br> the data inputs to and outputs from to these activities</p></div>
+						<div class="box red" style=" flex: 1 0 200px; font-size: 18px; height: 220px; margin: 10px;  background-color: #498C8A;"><p><b style="font-size: 22px; text-align: center;">External Entities</b><br><br> the sources from which information flows into the system and the recipients of information leaving the system</p></div>
+						<div class="box green" style=" flex: 1 0 200px; font-size: 18px; height: 220px; margin: 10px; background-color: #ffa206;"><p><b style="font-size: 22px; text-align: center;">Data stores</b><br><br> where information is stored within the system</p></div>
+
+					</div>
+				</section>
+				<section data-background="">
+					<h2>Different Levels of DFD</h2>
+					<div id="flexcontain" class="fragment visible current-fragment" data-fragment-index="0">
+						<div class="box blue" style=" flex: 1 0 200px; font-size: 26px; height: 400px; margin: 10px;"><p><b style="font-size: 30px; text-align: center;">Context DFD or Level 0 </b><br><br>present an overview of the system and its interaction with the rest of the “world”</p></div>
+						<div class="box aquamarine" style=" flex: 1 0 200px; font-size: 26px; height: 400px; margin: 10px; "><p><b style="font-size: 30px; text-align: center;"> Level 1</b><br><br>present a more detailed view of the system than context diagrams, by showing the main sub-processes and stores of data that make up the system as a whole</p></div>
+						<div class="box red" style=" flex: 1 0 200px; font-size: 26px; height: 400px; margin: 10px;"><p><b style="font-size: 30px; text-align: center;">Level 2</b><br><br>data-flow diagram can be decomposed (“exploded”) into a more detailed model a level lower in the hierarchy</p></div>
+
+					</div>
+				</section>
+				<section data-background="" data-background-image="images/testing/unit_testing_bg.jpg" class="present" style="top: 80.5px; display: block;">
+					<h5 id="boxstyle">Context diagram (level 0)</h5>
+					<img src="img/01-context-dfd.webp"  alt="Context dfd diagram"/>
+					<h5 id="boxstyle">Level 1 diagram</h5>
+					<img src="img/02-level-one-dfd.webp"  alt="Kevel 1 dfd diagram"/>
+				</section>
+				<section data-background="images/intro/sidebanner.png" data-background-size="contain" style="top: 0px; display: block; text-align: left;" data-background-image="images/intro/sidebanner.png" class="present">
+					<h3>Understanding DFD's</h3>
+					
+				     <p>Which of the following options is <u>not</u> true?</p>
+				     
+				     <input type="radio" id="age1" style="transform: scale(2); " name="attendance" value="A">
+				     <label for="attendance1" style="font-size: 20px;">A) Data stores may not be directly linked by data-flows; information is transformed from one stored state to another via a process.</label><br>
+				     <input type="radio" id="age2" style="transform: scale(2);" name="attendance" value="B">
+				     <label for="attendance2" style="font-size: 20px;">B)  Information may not flow directly from a data store to an external entity, nor may it flow from an external entity directly to a data store.</label><br>  
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="C">
+				     <label for="attendance3" style="font-size: 20px;">C)  Information always flows to or from a process; the other end of the flow may be an external entity, a data store or another process.</label><br>
+				     <input type="radio" id="age3" style="transform: scale(2);" name="attendance" value="D">
+				     <label for="attendance3" style="font-size: 20px;">D) All of the above options are true.</label><br><br>				  
+				</section>
+				<section data-background="img/books_bg.jpg">
+					<h1 style="color: black; background-color: rgba(255,255,255, .6); padding: 3px;">Database Management Systems (DBMS)</h1>
+				</section>
+				<section data-background="#eee" class="has-light-background present" style="top: 72.5px; display: block;">
+					<h3>Introducting the database</h3>
+					<div id="flexcontain">
+						<div class="box red" style="font-size: 20px; margin: 10px; background-color: #2d4650; height: 420px;"><p><b style="font-size: 32px;">Shared, integrated computer structure that stores a collection of:</b><br> <br>  End-user data – Raw facts of interest to end user.</p><p>Metadata – Data that describes data; describes data characteristics and relationships.</p></div>
+						<div class="box green" style="font-size: 20px; margin: 10px; background-color: #2d4650; height: 420px;"><p><b style="font-size: 32px;">Database management system (DBMS)</b> <br>Collection of programs</p><p>Manages the database structure</p><p>Controls access to data stored in the database.</p></div>
+					</div>
+				</section>
+				<section data-background="#fff" class="has-light-background present" style="top: 72.5px; display: block;">
+					<h3>Explanation of Databases</h3>
+					<div id="flexcontain">
+						<div class="box red" style="font-size: 20px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 28px;">Centradlized Database</b> <br>Data is located at a single site.  Data Centralization is becoming less popular due to:</p><p style="font-size:16px; margin-top: -9px;">Variety of Client Devices; Social, Mobile, and Embedded Technology, Latency Reduction -  Leveraging the distributed computing technology with parallel processing techniques transform the landscape and reduce latency</p></div>
+						<div class="box blue" style="font-size: 20px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 28px;">Distributed Database</b> <br> Data is distributed across different sites</p></div>
+						<div class="box green" style="font-size: 22px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 28px;">Cloud Database</b> <br> Created and maintained using cloud data services that provide defined perform ance m easures for the database</p></div>
+						<div class="box yellow" style="font-size: 22px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 26px;">Operational Database</b> <br>Designed to support a com pany’s day-to- day operations</p></div>
+						<div class="box orange" style="font-size: 22px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 26px;">Analytical database</b> <br> Stores historical data and business metrics used exclusively for tactical or strategic decision making</p></div>
+						<div class="box orange" style="font-size: 22px; margin: 10px; background-color: #2d4650;"><p><b style="font-size: 26px;">Business intelligence</b> <br>  Captures and processes business data to generate information that support decision making</p></div>
+					</div>
+				
+				</section>
+				<section data-background="" data-background-image="images/testing/unit_testing_bg.jpg" class="present" style="top: 80.5px; display: block;">
+					<h5 id="boxstyle">DBMS Overview</h5>
+					<img src="img/dbms_overview.PNG"  alt="DBMS overview"/>
+
+				</section>
+				<!--<section data-auto-animate>
+					<h2 data-id="code-title">Pretty Code</h2>
+					<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
+						import React, { useState } from 'react';
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    ...
+						  );
+						}
+					</code></pre>
+					<p>Code syntax highlighting courtesy of <a href="https://highlightjs.org/usage/">highlight.js</a>.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2 data-id="code-title">With animations</h2>
+					<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24"><script type="text/template">
+						import React, { useState } from 'react';
+
+						function Example() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    <div>
+						      <p>You clicked {count} times</p>
+						      <button onClick={() => setCount(count + 1)}>
+						        Click me
+						      </button>
+						    </div>
+						  );
+						}
+
+						function SecondExample() {
+						  const [count, setCount] = useState(0);
+
+						  return (
+						    <div>
+						      <p>You clicked {count} times</p>
+						      <button onClick={() => setCount(count + 1)}>
+						        Click me
+						      </button>
+						    </div>
+						  );
+						}
+					</script></code></pre>
+				</section>
+
+				<section>
+					<h2>Point of View</h2>
+					<p>
+						Press <strong>ESC</strong> to enter the slide overview.
+					</p>
+					<p>
+						Hold down the <strong>alt</strong> key (<strong>ctrl</strong> in Linux) and click on any element to zoom towards it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Click again to zoom back out.
+					</p>
+					<p>
+						(NOTE: Use ctrl + click in Linux.)
+					</p>
+				</section>
+
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<h2>Auto-Animate</h2>
+					<p>Automatically animate matching elements across slides with <a href="https://revealjs.com/auto-animate/">Auto-Animate</a>.</p>
+					<div class="r-hstack justify-center">
+						<div data-id="box1" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+						<div data-id="box2" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+						<div data-id="box3" style="background: #999; width: 50px; height: 50px; margin: 10px; border-radius: 5px;"></div>
+					</div>
+				</section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div class="r-hstack justify-center">
+						<div data-id="box1" data-auto-animate-delay="0" style="background: cyan; width: 150px; height: 100px; margin: 10px;"></div>
+						<div data-id="box2" data-auto-animate-delay="0.1" style="background: magenta; width: 150px; height: 100px; margin: 10px;"></div>
+						<div data-id="box3" data-auto-animate-delay="0.2" style="background: yellow; width: 150px; height: 100px; margin: 10px;"></div>
+					</div>
+					<h2 style="margin-top: 20px;">Auto-Animate</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
+					<div class="r-stack">
+						<div data-id="box1" style="background: cyan; width: 300px; height: 300px; border-radius: 200px;"></div>
+						<div data-id="box2" style="background: magenta; width: 200px; height: 200px; border-radius: 200px;"></div>
+						<div data-id="box3" style="background: yellow; width: 100px; height: 100px; border-radius: 200px;"></div>
+					</div>
+					<h2 style="margin-top: 20px;">Auto-Animate</h2>
+				</section>
+
+				<section>
+					<h2>Touch Optimized</h2>
+					<p>
+						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+					</p>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Markdown support
+
+						Write content using inline or external Markdown.
+						Instructions and more info available in the [docs](https://revealjs.com/markdown/).
+
+						```html []
+						<section data-markdown>
+						  ## Markdown support
+
+						  Write content using inline or external Markdown.
+						  Instructions and more info available in the [docs](https://revealjs.com/markdown/).
+						</section>
+						```
+					</script>
+				</section>
+
+				<section>
+					<p>Add the <code>r-fit-text</code> class to auto-size text</p>
+					<h2 class="r-fit-text">FIT TEXT</h2>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h2>Fragments</h2>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+					<section>
+						<h2>Fragment Styles</h2>
+						<p>There's different types of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">fade-right, </span>
+							<span style="display: inline-block;" class="fragment fade-up">up, </span>
+							<span style="display: inline-block;" class="fragment fade-down">down, </span>
+							<span style="display: inline-block;" class="fragment fade-left">left</span>
+						</p>
+						<p class="fragment fade-in-then-out">fade-in-then-out</p>
+						<p class="fragment fade-in-then-semi-out">fade-in-then-semi-out</p>
+						<p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+					</section>
+				</section>
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=slide#/transitions">Slide</a> -
+						<a href="?transition=convex#/transitions">Convex</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						reveal.js comes with a few themes built in: <br>
+						Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. 
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/black.css'); return false;">Black (default)</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/white.css'); return false;">White</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/league.css'); return false;">League</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/sky.css'); return false;">Sky</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/beige.css'); return false;">Beige</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/simple.css'); return false;">Simple</a> <br>
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/serif.css'); return false;">Serif</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/blood.css'); return false;">Blood</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/night.css'); return false;">Night</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/moon.css'); return false;">Moon</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','dist/theme/solarized.css'); return false;">Solarized</a>
+					</p>
+				</section>
+
+				<section>
+					<section data-background="#dddddd">
+						<h2>Slide Backgrounds</h2>
+						<p>
+							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
+						</p>
+						<a href="#" class="navigate-down">
+							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png">
+						<h2>Image Backgrounds</h2>
+						<pre><code class="hljs html">&lt;section data-background="image.png"&gt;</code></pre>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
+						<h2>Tiled Backgrounds</h2>
+						<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
+					</section>
+					<section data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-color="#000000">
+						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+							<h2>Video Backgrounds</h2>
+							<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
+						</div>
+					</section>
+					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+						<h2>... and GIFs!</h2>
+					</section>
+				</section>
+
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
+					</p>
+					<pre><code class="hljs javascript">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
+				</section>
+
+				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						You can override background transitions per-slide.
+					</p>
+					<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
+				</section>
+
+				<section data-background-iframe="https://hakim.se" data-background-interactive>
+					<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h2>Iframe Backgrounds</h2>
+						<p>Since reveal.js runs on the web, you can easily embed other web content. Try interacting with the page in the background.</p>
+					</div>
+				</section>
+
+				<section>
+					<h2>Marvelous List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Fantastic Ordered List</h2>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Tabular Tables</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Value</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Apples</td>
+								<td>$1</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>Lemonade</td>
+								<td>$2</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<td>Bread</td>
+								<td>$3</td>
+								<td>2</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h2>Clever Quotes</h2>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The nice thing about standards is that there are so many to choose from</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+
+				<section>
+					<h2>Intergalactic Interconnections</h2>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Speaker View</h2>
+					<p>There's a <a href="https://revealjs.com/speaker-view/">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
+					<p>Press the <em>S</em> key to try it out.</p>
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://revealjs.com/pdf-export/">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+				</section>
+
+				<section>
+					<h2>Global State</h2>
+					<p>
+						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+						will be added as a class to the document element when the slide is open. This lets you
+						apply broader style changes, like switching the page background.
+					</p>
+				</section>
+
+				<section data-state="customevent">
+					<h2>State Events</h2>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+Reveal.on( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
+					</p>
+				</section>
+
+				<section>
+					<h2>Much more</h2>
+					<ul>
+						<li>Right-to-left support</li>
+						<li><a href="https://revealjs.com/api/">Extensive JavaScript API</a></li>
+						<li><a href="https://revealjs.com/auto-slide/">Auto-progression</a></li>
+						<li><a href="https://revealjs.com/backgrounds/#parallax-background">Parallax backgrounds</a></li>
+						<li><a href="https://revealjs.com/keyboard/">Custom keyboard bindings</a></li>
+					</ul>
+				</section>
+
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="https://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>-->
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+	
+
+
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [  RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+	</body>
+</html>
